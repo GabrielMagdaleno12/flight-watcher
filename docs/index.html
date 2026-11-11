@@ -43,8 +43,10 @@
   <form method="dialog" id="form-add">
     <h3>Nova busca</h3>
     <div class="row">
-      <label>Origem (IATA)<input name="origin" maxlength="3" placeholder="GRU" required></label>
-      <label>Destino (IATA)<input name="destination" maxlength="3" placeholder="GIG" required></label>
+      <div class="field"><label for="c-origin">Saindo de</label>
+        <div class="combo" id="combo-origin"><input id="c-origin" type="text" autocomplete="off" placeholder="Ex.: São Paulo" role="combobox" aria-expanded="false" aria-controls="lb-origin" aria-autocomplete="list"><ul id="lb-origin" role="listbox" hidden></ul></div></div>
+      <div class="field"><label for="c-destination">Indo para</label>
+        <div class="combo" id="combo-destination"><input id="c-destination" type="text" autocomplete="off" placeholder="Ex.: Miami" role="combobox" aria-expanded="false" aria-controls="lb-destination" aria-autocomplete="list"><ul id="lb-destination" role="listbox" hidden></ul></div></div>
     </div>
     <div class="row">
       <label>Ida<input name="depart" type="date" required></label>

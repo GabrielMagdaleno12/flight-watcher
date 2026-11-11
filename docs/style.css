@@ -60,6 +60,18 @@ dialog h3 { margin: 0; }
 .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 fieldset { border: 1px solid var(--line); border-radius: 10px; }
 fieldset label { flex-direction: row; align-items: center; gap: 8px; color: var(--ink); font-size: .95rem; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field > label { font-size: .85rem; color: var(--muted); }
+.combo { position: relative; }
+.combo input { width: 100%; }
+.combo input.chosen { border-color: var(--good); }
+.combo ul { position: absolute; z-index: 10; left: 0; right: 0; top: calc(100% + 4px); margin: 0; padding: 4px; list-style: none; background: var(--card); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, .18); max-height: 260px; overflow: auto; min-width: 260px; }
+.combo li { padding: 7px 10px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; gap: 10px; font-size: .92rem; }
+.combo li small { color: var(--muted); }
+.combo li[aria-selected="true"], .combo li:hover { background: var(--brand); color: var(--brand-ink); }
+.combo li[aria-selected="true"] small, .combo li:hover small { color: inherit; opacity: .85; }
+.combo li.none { cursor: default; color: var(--muted); }
+.combo li.none:hover { background: none; color: var(--muted); }
 .actions { display: flex; justify-content: flex-end; gap: 8px; }
 .hint { color: var(--muted); font-size: .85rem; margin: 0; }
 .hint.err { color: var(--bad); }

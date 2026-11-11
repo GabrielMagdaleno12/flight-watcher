@@ -23,7 +23,7 @@ Se uma fonte falhar, o painel de saúde no topo do site mostra o motivo, e as ou
 ## Usar
 
 - Site: `https://SEU_USUARIO.github.io/flight-watcher/`
-- **+ Nova busca**: origem/destino (códigos IATA: GRU, GIG, SSA, LIS…), datas, preço-alvo, fontes e intervalo (15 min a 1 dia).
+- **+ Nova busca**: digite o nome da cidade (ex.: "miami", "nova york", "lisboa") e escolha na lista; datas, preço-alvo, fontes e intervalo (15 min a 1 dia).
 - Para criar/remover buscas pelo site: **Conectar ao GitHub** e cole um token fine-grained (só este repositório, **Contents: Read and write**). Fica só no seu navegador.
 - Ou edite `docs/data/searches.json` direto no GitHub.
 

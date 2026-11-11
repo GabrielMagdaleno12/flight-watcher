@@ -1,3 +1,5 @@
+import { searchAirports, cityLabel, findByIata } from './airports.js';
+
 const $ = (s) => document.querySelector(s);
 const brl = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
 const fmtDate = (iso) => (iso ? iso.split('-').reverse().join('/') : '—');
@@ -15,7 +17,7 @@ function h(tag, attrs = {}, ...kids) {
   return el;
 }
 
-const state = { searches: [], prices: {}, status: {}, deals: [], meta: { sources: [] }, fSource: '', fAirline: '' };
+const state = { searches: [], prices: {}, status: {}, deals: [], meta: { sources: [] }, airports: [], fSource: '', fAirline: '' };
 
 async function loadJson(name, fallback) {
   try {
@@ -25,9 +27,9 @@ async function loadJson(name, fallback) {
 }
 
 async function loadAll() {
-  [state.searches, state.prices, state.status, state.deals, state.meta] = await Promise.all([
+  [state.searches, state.prices, state.status, state.deals, state.meta, state.airports] = await Promise.all([
     loadJson('searches.json', []), loadJson('prices.json', {}), loadJson('status.json', {}),
-    loadJson('deals.json', []), loadJson('meta.json', { sources: [] }),
+    loadJson('deals.json', []), loadJson('meta.json', { sources: [] }), loadJson('airports.json', []),
   ]);
   render();
 }
@@ -102,7 +104,7 @@ function renderSearches() {
 
     const card = h('article', { class: 'card' },
       h('h3', {}, s.label || `${s.origin} → ${s.destination}`),
-      h('div', { class: 'route' }, `${s.origin} → ${s.destination} · ${fmtDate(s.depart)}${s.return ? ` – ${fmtDate(s.return)}` : ' (só ida)'} · a cada ${s.intervalMinutes} min`),
+      h('div', { class: 'route' }, `${cityLabel(state.airports, s.origin)} → ${cityLabel(state.airports, s.destination)} · ${fmtDate(s.depart)}${s.return ? ` – ${fmtDate(s.return)}` : ' (só ida)'} · a cada ${s.intervalMinutes} min`),
       best
         ? h('div', { class: 'price' }, brl(best.price), ' ', h('small', {}, `${best.airline ?? ''} · ${best.stops === 0 ? 'direto' : best.stops != null ? best.stops + ' esc.' : ''}`))
         : h('div', { class: 'empty' }, rows.length ? 'Nenhuma oferta com esses filtros.' : 'Aguardando a 1ª coleta (roda a cada 15 min no GitHub).'),
@@ -170,7 +172,47 @@ async function removeSearch(id) {
   try { await ghEditSearches((list) => list.filter((s) => s.id !== id)); } catch (e) { alert(e.message); }
 }
 
+/* ---------- Campo de cidade/aeroporto com sugestões ---------- */
+function makeCombo(name) {
+  const input = $(`#c-${name}`), list = $(`#lb-${name}`);
+  let selected = null, items = [], active = -1;
+
+  const close = () => { list.hidden = true; input.setAttribute('aria-expanded', 'false'); active = -1; };
+  const choose = (a) => {
+    selected = a; input.value = `${a[1]} (${a[0]}) — ${a[2].length > 38 ? a[2].slice(0, 36) + '…' : a[2]}`;
+    input.classList.add('chosen'); close();
+  };
+  const paint = () => {
+    list.replaceChildren();
+    if (!items.length) list.append(h('li', { class: 'none' }, 'Nenhum aeroporto encontrado'));
+    items.forEach((a, i) => list.append(h('li', { role: 'option', id: `${name}-opt-${i}`, 'aria-selected': i === active ? 'true' : 'false', onmousedown: (e) => { e.preventDefault(); choose(a); } },
+      h('span', {}, `${a[1]} · ${a[2].length > 34 ? a[2].slice(0, 32) + '…' : a[2]}`), h('small', {}, `${a[0]} · ${a[3]}`))));
+    list.hidden = false; input.setAttribute('aria-expanded', 'true');
+  };
+  input.addEventListener('input', () => {
+    selected = null; input.classList.remove('chosen');
+    items = searchAirports(state.airports, input.value);
+    if (!input.value.trim()) { close(); return; }
+    active = items.length ? 0 : -1; paint();
+  });
+  input.addEventListener('keydown', (e) => {
+    if (list.hidden) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); active = Math.min(active + 1, items.length - 1); paint(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); active = Math.max(active - 1, 0); paint(); }
+    else if (e.key === 'Enter' && active >= 0) { e.preventDefault(); choose(items[active]); }
+    else if (e.key === 'Escape') { e.stopPropagation(); close(); }
+  });
+  input.addEventListener('blur', close);
+  return {
+    get value() { return selected; },
+    reset() { selected = null; input.value = ''; input.classList.remove('chosen'); close(); },
+    // aceita também um código IATA digitado por inteiro (ex.: "MIA")
+    resolve() { return selected ?? (/^[A-Za-z]{3}$/.test(input.value.trim()) ? findByIata(state.airports, input.value.trim()) ?? null : null); },
+  };
+}
+
 function setupAddDialog() {
+  const origin = makeCombo('origin'), destination = makeCombo('destination');
   const boxes = $('#source-boxes');
   for (const src of state.meta.sources?.length ? state.meta.sources : [{ id: 'google', name: 'Google Flights' }]) {
     boxes.append(h('label', {}, h('input', { type: 'checkbox', name: 'src', value: src.id, checked: src.id === 'google' }), src.name));
@@ -181,19 +223,20 @@ function setupAddDialog() {
     ev.preventDefault();
     const f = new FormData(ev.target);
     const msg = $('#add-msg');
-    const origin = String(f.get('origin')).toUpperCase().trim(), destination = String(f.get('destination')).toUpperCase().trim();
+    const from = origin.resolve(), to = destination.resolve();
     const sources = f.getAll('src');
-    const err = !/^[A-Z]{3}$/.test(origin) || !/^[A-Z]{3}$/.test(destination) ? 'Use códigos IATA de 3 letras (ex.: GRU, GIG, SSA).'
-      : origin === destination ? 'Origem e destino são iguais.'
+    const err = !from ? 'Escolha a cidade de origem na lista de sugestões.'
+      : !to ? 'Escolha a cidade de destino na lista de sugestões.'
+      : from[0] === to[0] ? 'Origem e destino são iguais.'
       : f.get('return') && f.get('return') < f.get('depart') ? 'A volta é antes da ida.'
       : !sources.length ? 'Escolha ao menos uma fonte.' : '';
     msg.className = 'hint err';
     if (err) { msg.textContent = err; return; }
-    const id = `${origin}-${destination}-${f.get('depart')}${f.get('return') ? '-' + f.get('return') : ''}`.toLowerCase();
-    const entry = { id, label: String(f.get('label') || '').trim() || `${origin} → ${destination}`, origin, destination, depart: f.get('depart'), return: f.get('return') || null, sources, intervalMinutes: Number(f.get('intervalMinutes')), targetPrice: f.get('targetPrice') ? Number(f.get('targetPrice')) : null, active: true };
+    const id = `${from[0]}-${to[0]}-${f.get('depart')}${f.get('return') ? '-' + f.get('return') : ''}`.toLowerCase();
+    const entry = { id, label: String(f.get('label') || '').trim() || `${from[1]} → ${to[1]}`, origin: from[0], destination: to[0], depart: f.get('depart'), return: f.get('return') || null, sources, intervalMinutes: Number(f.get('intervalMinutes')), targetPrice: f.get('targetPrice') ? Number(f.get('targetPrice')) : null, active: true };
     try {
       await ghEditSearches((list) => (list.some((s) => s.id === id) ? list : [...list, entry]));
-      $('#dlg-add').close(); ev.target.reset();
+      $('#dlg-add').close(); ev.target.reset(); origin.reset(); destination.reset();
     } catch (e) { msg.textContent = e.message; }
   });
 }
