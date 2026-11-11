@@ -152,19 +152,63 @@ function guessRepo() {
 const b64 = (str) => btoa(String.fromCharCode(...new TextEncoder().encode(str)));
 const unb64 = (b) => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\n/g, '')), (c) => c.charCodeAt(0)));
 
-async function ghEditSearches(mutate) {
-  const repo = guessRepo(), token = store.get('fw-token');
+const cleanRepo = (r) => r.trim().replace(/^https?:\/\/github\.com\//i, '').replace(/\.git$/i, '').replace(/^\/+|\/+$/g, '');
+const cleanToken = (t) => t.replace(/\s+/g, '');
+const HTTP_HINT = {
+  401: 'Token inválido ou expirado. Gere outro e cole de novo.',
+  403: 'Token sem permissão. Precisa de "Contents: Read and write" neste repositório.',
+  404: 'Repositório não encontrado ou o token não tem acesso a ele. Confira o nome (usuario/repositorio) e se o token foi criado para este repositório.',
+  409: 'Conflito: o arquivo mudou enquanto você salvava. Tente de novo.',
+  422: 'O GitHub recusou os dados. Atualize a página e tente de novo.',
+};
+
+// fetch que explica a falha em vez de só "Failed to fetch"
+async function gh(url, opts, step) {
+  try {
+    return await fetch(url, opts);
+  } catch (e) {
+    const off = navigator.onLine === false ? ' Você está sem internet.' : '';
+    throw new Error(`Não consegui falar com o GitHub (${step}): ${e.message}.${off} Costuma ser extensão de bloqueio (adblock/privacidade), VPN, antivírus ou rede da empresa barrando api.github.com — desative para este site e tente de novo. Use "Testar conexão" em "Conectar ao GitHub".`);
+  }
+}
+
+function ghAuth() {
+  const repo = cleanRepo(guessRepo()), token = cleanToken(store.get('fw-token'));
   if (!repo || !token) { $('#dlg-settings').showModal(); throw new Error('Conecte ao GitHub primeiro.'); }
+  if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(repo)) throw new Error(`Nome do repositório inválido: "${repo}". Use o formato usuario/repositorio.`);
+  if (!/^[\x21-\x7E]+$/.test(token)) throw new Error('O token tem caracteres estranhos (copiou algo a mais?). Gere e cole de novo, só o texto que começa com github_pat_.');
+  return { repo, headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' } };
+}
+
+async function ghEditSearches(mutate) {
+  const { repo, headers } = ghAuth();
   const url = `https://api.github.com/repos/${repo}/contents/docs/data/searches.json`;
-  const headers = { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' };
-  const cur = await fetch(url, { headers });
-  if (!cur.ok) throw new Error(`GitHub respondeu ${cur.status} ao ler as buscas.`);
+  const cur = await gh(url, { headers }, 'ao ler as buscas');
+  if (!cur.ok) throw new Error(`GitHub respondeu ${cur.status} ao ler as buscas. ${HTTP_HINT[cur.status] ?? ''}`);
   const file = await cur.json();
   const next = mutate(JSON.parse(unb64(file.content)));
-  const put = await fetch(url, { method: 'PUT', headers, body: JSON.stringify({ message: 'buscas: atualizado pelo site', content: b64(JSON.stringify(next, null, 2) + '\n'), sha: file.sha }) });
-  if (!put.ok) throw new Error(`GitHub respondeu ${put.status} ao salvar.`);
+  const put = await gh(url, { method: 'PUT', headers, body: JSON.stringify({ message: 'buscas: atualizado pelo site', content: b64(JSON.stringify(next, null, 2) + '\n'), sha: file.sha }) }, 'ao salvar');
+  if (!put.ok) throw new Error(`GitHub respondeu ${put.status} ao salvar. ${HTTP_HINT[put.status] ?? ''}`);
   state.searches = next;
   render();
+}
+
+async function testConnection() {
+  const out = $('#set-msg');
+  out.className = 'hint';
+  out.textContent = 'Testando…';
+  try {
+    store.set('fw-repo', cleanRepo($('#s-repo').value)); store.set('fw-token', cleanToken($('#s-token').value));
+    const { repo, headers } = ghAuth();
+    const res = await gh(`https://api.github.com/repos/${repo}`, { headers }, 'ao testar');
+    if (!res.ok) throw new Error(`GitHub respondeu ${res.status}. ${HTTP_HINT[res.status] ?? ''}`);
+    const info = await res.json();
+    if (info.permissions && !info.permissions.push) throw new Error('Conectou, mas o token só tem leitura. Precisa de "Contents: Read and write".');
+    out.textContent = `✓ Tudo certo: conectado a ${info.full_name} com permissão de escrita.`;
+  } catch (e) {
+    out.className = 'hint err';
+    out.textContent = e.message;
+  }
 }
 
 async function removeSearch(id) {
@@ -244,7 +288,8 @@ function setupAddDialog() {
 function setupSettings() {
   $('#btn-settings').addEventListener('click', () => { $('#s-repo').value = guessRepo(); $('#s-token').value = store.get('fw-token'); $('#dlg-settings').showModal(); });
   $('#set-cancel').addEventListener('click', () => $('#dlg-settings').close());
-  $('#set-save').addEventListener('click', () => { store.set('fw-repo', $('#s-repo').value.trim()); store.set('fw-token', $('#s-token').value.trim()); $('#dlg-settings').close(); });
+  $('#set-save').addEventListener('click', () => { store.set('fw-repo', cleanRepo($('#s-repo').value)); store.set('fw-token', cleanToken($('#s-token').value)); $('#dlg-settings').close(); });
+  $('#set-test').addEventListener('click', testConnection);
 }
 
 $('#f-source').addEventListener('change', (e) => { state.fSource = e.target.value; renderSearches(); });

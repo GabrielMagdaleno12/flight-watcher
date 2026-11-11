@@ -80,8 +80,10 @@
     <p class="hint">Para criar e remover buscas pelo site, cole um token do GitHub (fine-grained, só neste repositório, permissão <b>Contents: Read and write</b>). Fica salvo apenas neste navegador.</p>
     <label>Repositório<input id="s-repo" placeholder="usuario/flight-watcher"></label>
     <label>Token<input id="s-token" type="password" placeholder="github_pat_…"></label>
+    <p class="hint" id="set-msg"></p>
     <div class="actions">
       <button type="button" class="ghost" id="set-cancel">Fechar</button>
+      <button type="button" class="ghost" id="set-test">Testar conexão</button>
       <button type="button" id="set-save">Salvar</button>
     </div>
   </form>
