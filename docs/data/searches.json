@@ -6,9 +6,26 @@
     "destination": "GIG",
     "depart": "2026-12-20",
     "return": "2026-12-27",
-    "sources": ["google", "travelpayouts"],
+    "sources": [
+      "google",
+      "travelpayouts"
+    ],
     "intervalMinutes": 60,
     "targetPrice": 500,
+    "active": true
+  },
+  {
+    "id": "gru-mia-2027-09-01",
+    "label": "São Paulo → Miami",
+    "origin": "GRU",
+    "destination": "MIA",
+    "depart": "2027-09-01",
+    "return": null,
+    "sources": [
+      "google"
+    ],
+    "intervalMinutes": 60,
+    "targetPrice": null,
     "active": true
   }
 ]
