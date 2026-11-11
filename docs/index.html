@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radar de Passagens</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>✈ Radar de Passagens</h1>
+    <p class="sub" id="updated">Carregando…</p>
+  </div>
+  <button class="ghost" id="btn-settings">Conectar ao GitHub</button>
+</header>
+
+<main>
+  <section id="health" class="chips" aria-label="Saúde das fontes"></section>
+
+  <section>
+    <h2>🔥 Ofertas relâmpago e metas atingidas</h2>
+    <div id="deals" class="deals"></div>
+  </section>
+
+  <section class="toolbar">
+    <h2>Minhas buscas</h2>
+    <div class="filters">
+      <label>Fonte
+        <select id="f-source"><option value="">Todas</option></select>
+      </label>
+      <label>Companhia
+        <select id="f-airline"><option value="">Todas</option></select>
+      </label>
+      <button id="btn-add">+ Nova busca</button>
+    </div>
+  </section>
+
+  <div id="searches" class="grid"></div>
+</main>
+
+<dialog id="dlg-add">
+  <form method="dialog" id="form-add">
+    <h3>Nova busca</h3>
+    <div class="row">
+      <label>Origem (IATA)<input name="origin" maxlength="3" placeholder="GRU" required></label>
+      <label>Destino (IATA)<input name="destination" maxlength="3" placeholder="GIG" required></label>
+    </div>
+    <div class="row">
+      <label>Ida<input name="depart" type="date" required></label>
+      <label>Volta (opcional)<input name="return" type="date"></label>
+    </div>
+    <div class="row">
+      <label>Avisar abaixo de R$<input name="targetPrice" type="number" min="1" placeholder="opcional"></label>
+      <label>Verificar a cada
+        <select name="intervalMinutes">
+          <option value="15">15 min</option><option value="30">30 min</option>
+          <option value="60" selected>1 hora</option><option value="180">3 horas</option>
+          <option value="360">6 horas</option><option value="1440">1 dia</option>
+        </select>
+      </label>
+    </div>
+    <fieldset><legend>Fontes</legend>
+      <div id="source-boxes"></div>
+    </fieldset>
+    <label>Apelido (opcional)<input name="label" placeholder="Natal em família"></label>
+    <p class="hint" id="add-msg"></p>
+    <div class="actions">
+      <button type="button" class="ghost" id="add-cancel">Cancelar</button>
+      <button type="submit">Salvar busca</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlg-settings">
+  <form method="dialog">
+    <h3>Conectar ao GitHub</h3>
+    <p class="hint">Para criar e remover buscas pelo site, cole um token do GitHub (fine-grained, só neste repositório, permissão <b>Contents: Read and write</b>). Fica salvo apenas neste navegador.</p>
+    <label>Repositório<input id="s-repo" placeholder="usuario/flight-watcher"></label>
+    <label>Token<input id="s-token" type="password" placeholder="github_pat_…"></label>
+    <div class="actions">
+      <button type="button" class="ghost" id="set-cancel">Fechar</button>
+      <button type="button" id="set-save">Salvar</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="app.js" type="module"></script>
+</body>
+</html>

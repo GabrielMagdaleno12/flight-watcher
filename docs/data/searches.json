@@ -1,0 +1,14 @@
+[
+  {
+    "id": "exemplo-gru-gig",
+    "label": "São Paulo → Rio (exemplo)",
+    "origin": "GRU",
+    "destination": "GIG",
+    "depart": "2026-12-20",
+    "return": "2026-12-27",
+    "sources": ["google", "travelpayouts"],
+    "intervalMinutes": 60,
+    "targetPrice": 500,
+    "active": true
+  }
+]

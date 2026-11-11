@@ -1,0 +1,13 @@
+{
+ "updatedAt": "2026-11-11T20:36:56.242Z",
+ "sources": [
+  {
+   "id": "google",
+   "name": "Google Flights"
+  },
+  {
+   "id": "travelpayouts",
+   "name": "Travelpayouts (Aviasales)"
+  }
+ ]
+}

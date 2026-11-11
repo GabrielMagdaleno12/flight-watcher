@@ -1,0 +1,14 @@
+{
+  "name": "flight-watcher",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/",
+    "collect": "node src/run.js",
+    "probe": "node src/probe.js"
+  },
+  "dependencies": {
+    "playwright": "^1.49.0"
+  }
+}
