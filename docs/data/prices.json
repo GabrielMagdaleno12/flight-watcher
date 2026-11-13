@@ -499,6 +499,106 @@
    "depart": "2026-12-20",
    "return": "2026-12-27",
    "url": "https://www.google.com/travel/flights?q=Flights%20to%20GIG%20from%20GRU%20on%202026-12-20%20through%202026-12-27&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-13T14:27:17.054Z",
+   "source": "google",
+   "price": 698,
+   "airline": "LATAM",
+   "stops": 0,
+   "depart": "2026-12-20",
+   "return": "2026-12-27",
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20GIG%20from%20GRU%20on%202026-12-20%20through%202026-12-27&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-13T14:27:17.054Z",
+   "source": "google",
+   "price": 698,
+   "airline": "LATAM",
+   "stops": 0,
+   "depart": "2026-12-20",
+   "return": "2026-12-27",
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20GIG%20from%20GRU%20on%202026-12-20%20through%202026-12-27&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-13T14:27:17.054Z",
+   "source": "google",
+   "price": 698,
+   "airline": "LATAM",
+   "stops": 0,
+   "depart": "2026-12-20",
+   "return": "2026-12-27",
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20GIG%20from%20GRU%20on%202026-12-20%20through%202026-12-27&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-13T14:27:17.054Z",
+   "source": "google",
+   "price": 698,
+   "airline": "LATAM",
+   "stops": 0,
+   "depart": "2026-12-20",
+   "return": "2026-12-27",
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20GIG%20from%20GRU%20on%202026-12-20%20through%202026-12-27&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-13T14:27:17.054Z",
+   "source": "google",
+   "price": 698,
+   "airline": "LATAM",
+   "stops": 0,
+   "depart": "2026-12-20",
+   "return": "2026-12-27",
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20GIG%20from%20GRU%20on%202026-12-20%20through%202026-12-27&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-13T14:27:17.054Z",
+   "source": "google",
+   "price": 880,
+   "airline": "LATAM",
+   "stops": 0,
+   "depart": "2026-12-20",
+   "return": "2026-12-27",
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20GIG%20from%20GRU%20on%202026-12-20%20through%202026-12-27&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-13T14:27:17.054Z",
+   "source": "google",
+   "price": 880,
+   "airline": "LATAM",
+   "stops": 0,
+   "depart": "2026-12-20",
+   "return": "2026-12-27",
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20GIG%20from%20GRU%20on%202026-12-20%20through%202026-12-27&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-13T14:27:17.054Z",
+   "source": "google",
+   "price": 931,
+   "airline": "LATAM",
+   "stops": 0,
+   "depart": "2026-12-20",
+   "return": "2026-12-27",
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20GIG%20from%20GRU%20on%202026-12-20%20through%202026-12-27&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-13T14:27:17.054Z",
+   "source": "google",
+   "price": 1240,
+   "airline": "Gol",
+   "stops": 0,
+   "depart": "2026-12-20",
+   "return": "2026-12-27",
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20GIG%20from%20GRU%20on%202026-12-20%20through%202026-12-27&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-13T14:27:17.054Z",
+   "source": "google",
+   "price": 1240,
+   "airline": "Gol",
+   "stops": 0,
+   "depart": "2026-12-20",
+   "return": "2026-12-27",
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20GIG%20from%20GRU%20on%202026-12-20%20through%202026-12-27&curr=BRL&hl=pt-BR"
   }
  ],
  "gru-mia-2027-09-01": [
@@ -676,6 +776,56 @@
    "t": "2026-11-12T23:54:10.704Z",
    "source": "google",
    "price": 6389,
+   "airline": "LATAMDelta",
+   "stops": 0,
+   "depart": "2027-09-01",
+   "return": null,
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20MIA%20from%20GRU%20on%202027-09-01&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-13T14:27:17.054Z",
+   "source": "google",
+   "price": 4017,
+   "airline": "Arajet",
+   "stops": null,
+   "depart": "2027-09-01",
+   "return": null,
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20MIA%20from%20GRU%20on%202027-09-01&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-13T14:27:17.054Z",
+   "source": "google",
+   "price": 5097,
+   "airline": "Avianca",
+   "stops": null,
+   "depart": "2027-09-01",
+   "return": null,
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20MIA%20from%20GRU%20on%202027-09-01&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-13T14:27:17.054Z",
+   "source": "google",
+   "price": 5097,
+   "airline": "AviancaGol",
+   "stops": null,
+   "depart": "2027-09-01",
+   "return": null,
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20MIA%20from%20GRU%20on%202027-09-01&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-13T14:27:17.054Z",
+   "source": "google",
+   "price": 5532,
+   "airline": "COPA",
+   "stops": null,
+   "depart": "2027-09-01",
+   "return": null,
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20MIA%20from%20GRU%20on%202027-09-01&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-13T14:27:17.054Z",
+   "source": "google",
+   "price": 6450,
    "airline": "LATAMDelta",
    "stops": 0,
    "depart": "2027-09-01",
