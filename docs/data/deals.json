@@ -1,5 +1,17 @@
 [
  {
+  "t": "2026-11-14T14:55:12.308Z",
+  "searchId": "gru-mia-2027-09-01",
+  "label": "São Paulo → Miami",
+  "price": 4025,
+  "airline": "Arajet",
+  "source": "google",
+  "url": "https://www.google.com/travel/flights?q=Flights%20to%20MIA%20from%20GRU%20on%202027-09-01&curr=BRL&hl=pt-BR",
+  "belowTarget": false,
+  "flash": true,
+  "dropPct": 21
+ },
+ {
   "t": "2026-11-14T07:55:43.929Z",
   "searchId": "gru-mia-2027-09-01",
   "label": "São Paulo → Miami",
