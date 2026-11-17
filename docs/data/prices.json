@@ -2671,6 +2671,46 @@
    "depart": "2027-09-01",
    "return": null,
    "url": "https://www.google.com/travel/flights?q=Flights%20to%20MIA%20from%20GRU%20on%202027-09-01&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-17T13:07:27.915Z",
+   "source": "google",
+   "price": 4116,
+   "airline": "Arajet",
+   "stops": null,
+   "depart": "2027-09-01",
+   "return": null,
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20MIA%20from%20GRU%20on%202027-09-01&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-17T13:07:27.915Z",
+   "source": "google",
+   "price": 5202,
+   "airline": "Avianca",
+   "stops": null,
+   "depart": "2027-09-01",
+   "return": null,
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20MIA%20from%20GRU%20on%202027-09-01&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-17T13:07:27.915Z",
+   "source": "google",
+   "price": 5202,
+   "airline": "AviancaGol",
+   "stops": null,
+   "depart": "2027-09-01",
+   "return": null,
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20MIA%20from%20GRU%20on%202027-09-01&curr=BRL&hl=pt-BR"
+  },
+  {
+   "t": "2026-11-17T13:07:27.915Z",
+   "source": "google",
+   "price": 6584,
+   "airline": "LATAMDelta",
+   "stops": 0,
+   "depart": "2027-09-01",
+   "return": null,
+   "url": "https://www.google.com/travel/flights?q=Flights%20to%20MIA%20from%20GRU%20on%202027-09-01&curr=BRL&hl=pt-BR"
   }
  ]
 }
