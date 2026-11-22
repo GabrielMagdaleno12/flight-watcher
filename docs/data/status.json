@@ -1,13 +1,13 @@
 {
  "google": {
   "ok": true,
-  "at": "2026-11-21T19:59:45.450Z",
+  "at": "2026-11-22T00:17:13.261Z",
   "offers": 4,
-  "lastOkAt": "2026-11-21T19:59:45.450Z"
+  "lastOkAt": "2026-11-22T00:17:13.261Z"
  },
  "travelpayouts": {
   "ok": false,
-  "at": "2026-11-21T19:59:45.450Z",
+  "at": "2026-11-22T00:17:13.261Z",
   "code": "not_configured",
   "error": "TRAVELPAYOUTS_TOKEN não configurado"
  }
